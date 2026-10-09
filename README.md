@@ -96,3 +96,6 @@ node tools/screenshot.js 6 out.png "ArrowDown,ArrowRight"   # 真实浏览器截
    `getComputedStyle()` 打出来才抓到的。现在 CSS 里显式写了 `.overlay[hidden] { display: none !important }`。
 
 教训：纯逻辑测试和无头 DOM 测试能覆盖规则，但**渲染与层叠必须让真实浏览器看一眼**。
+
+
+哦对了，这是deepseekAgent写的，我把这东西传上去而已。
