@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="墨迹成行 —— 一个滑行成画的小游戏：棋子一直滑到撞墙为止，把每一格都涂上墨。">
+<title>墨迹成行 · Ink Drift</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-fx" aria-hidden="true"></div>
+
+<main class="app">
+  <header class="topbar">
+    <h1 class="title">墨迹成行<span>Ink Drift</span></h1>
+    <div class="tools">
+      <button id="btn-levels" class="tool" type="button">关卡</button>
+      <button id="btn-help" class="tool" type="button">玩法</button>
+      <button id="btn-sound" class="tool" type="button" aria-pressed="true">音效 · 开</button>
+    </div>
+  </header>
+
+  <section class="hud" aria-live="polite">
+    <div class="stat">
+      <span class="k">第</span>
+      <b id="stat-level" class="v">1</b>
+      <span class="k">关</span>
+    </div>
+    <div class="stat">
+      <span class="k">步数</span><b id="stat-moves" class="v">0</b>
+    </div>
+    <div class="stat">
+      <span class="k">已涂</span>
+      <b id="stat-painted" class="v">0</b>
+      <span class="k">/</span>
+      <b id="stat-total" class="v">0</b>
+    </div>
+    <div class="stat stars" aria-label="最佳评价">
+      <span class="k">最佳</span><span id="stat-stars">—</span>
+    </div>
+  </section>
+
+  <div id="stage" class="stage">
+    <svg id="board" viewBox="0 0 480 480" role="img" aria-label="棋盘"></svg>
+    <div id="badge" class="badge" hidden>即兴局</div>
+  </div>
+
+  <p id="tip" class="tip">按 <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 或 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 滑行；手机可滑动。</p>
+
+  <footer class="controls">
+    <button id="btn-undo" type="button">↶ 悔一步</button>
+    <button id="btn-restart" type="button">↺ 重来</button>
+    <button id="btn-hint" type="button">提示</button>
+    <button id="btn-next" class="primary" type="button">下一关 →</button>
+  </footer>
+</main>
+
+<div id="win" class="overlay" hidden>
+  <div class="panel panel-win" role="dialog" aria-modal="true" aria-labelledby="win-title">
+    <h2 id="win-title">一纸成画</h2>
+    <div id="win-sub" class="sub">用了 0 步</div>
+    <div id="win-stars" class="bigstars">★★★</div>
+    <p id="win-best" class="best"></p>
+    <div class="row">
+      <button id="btn-replay" type="button">看回放</button>
+      <button id="btn-again" type="button">再来一次</button>
+      <button id="btn-win-next" class="primary" type="button">下一关</button>
+    </div>
+  </div>
+</div>
+
+<div id="picker" class="overlay" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+    <h2 id="picker-title">选择关卡</h2>
+    <div id="level-grid" class="level-grid"></div>
+    <div class="row">
+      <button id="btn-endless" class="primary" type="button">无尽即兴局</button>
+      <button id="btn-picker-close" type="button">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div id="help" class="overlay" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <h2 id="help-title">玩法</h2>
+    <ul class="rules">
+      <li>按方向键 / <kbd>WASD</kbd> / 滑动屏幕，棋子会朝那个方向<b>一直滑到撞墙或边界</b>才停下。</li>
+      <li>棋子经过的每一格都会染上墨色，<b>把浅色格子全部涂满</b>就过关。</li>
+      <li>步数越少评价越高。少于步数上限可拿 ★★★，上限之内是 ★★，再多一步也还能过关，只是只剩 ★。</li>
+      <li><kbd>Z</kbd> 悔一步，<kbd>R</kbd> 重来，<kbd>H</kbd> 看提示，<kbd>N</kbd> 下一关。</li>
+      <li>12 关之后是「无尽即兴局」：每次随机生成一张新棋盘，永远玩不完。</li>
+    </ul>
+    <div class="row">
+      <button id="btn-help-close" class="primary" type="button">开始作画</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="game.js"></script>
+</body>
+</html>
